@@ -9,25 +9,22 @@ import net.java.usermanage.model.User;
 // para uso do mySQL, talvez de para modificar para mongoDB
 public class UserDAO {
 	private String jdbcURL = "jdbc:mysql://localhost:3306/sampledb";
-	private String jdbcUser = "aula";
-	private String jdbcSenha = "123";
+	private String jdbcUser = "root";
+	private String jdbcSenha = "1234";
+	private String driver = "com.mysql.jdbc.Driver";
 	 
 	
-	private static final String INSERT_USER_SQL = "INSERT INTO users" 
-			+ " (user_id, name, birth, mail, work) VALUES (?, ?, ?, ?, ?);";
-	private static final String SELECT_USER_BY_ID = "SELECT user_id, name, birth, mail, work"
-			+ " FROM users WHERE user_id = ? ;";
-	private static final String SELECT_ALL_USERS = "SELECT * FROM users ;";
-	//nao precisa do delete para esse
-	//private static final String DELETE_USERS_SQL = "DELETE FROM users WHERE user_id = ?;";
-	private static final String UPDATE_USERS_SQL = "UPDATE users SET name = ?, mail = ?, "
-			+ "birth = ?, work = ?, WHERE user_id = ?";
+	private static final String INSERT_USER_SQL = "INSERT INTO sampledb.users ( name, birth, email, work) VALUES ( ?, ?, ?, ?) ;";
+	private static final String SELECT_USER_BY_ID = "SELECT id, name, birth, email, work FROM sampledb.users WHERE id = ? ;";
+	private static final String SELECT_ALL_USERS = "SELECT * FROM sampledb.users ;";
+	private static final String DELETE_USERS_SQL = "DELETE FROM sampledb.users WHERE id = ? ;";
+	private static final String UPDATE_USERS_SQL = "UPDATE sampledb.users SET name = ?, email = ?, birth = ?, work = ? WHERE id = ? ;";
 	
 	protected Connection getConnection() {
 		Connection connection = null;
 		try {
 			
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(driver);
 			connection = DriverManager.getConnection(jdbcURL, jdbcUser, jdbcSenha);
 			
 		} 
@@ -37,6 +34,27 @@ public class UserDAO {
 		return connection;
 	}
 
+	
+	//* INSERT
+	public void insertUser(User user) throws SQLException {
+		try(Connection connection = getConnection(); 
+				PreparedStatement prepStat = connection.prepareStatement(INSERT_USER_SQL);){
+			
+			user.invertDate();
+			
+			prepStat.setString(1, user.getName());
+			prepStat.setString(2, user.getBirth());
+			prepStat.setString(3, user.getEmail());
+			prepStat.setString(4, user.getWork());
+			
+			prepStat.executeUpdate();	
+			
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		
+	}
+	
+	
 	//* SELECT by user_id
 	public User selectUser(int id) {
 		
@@ -51,9 +69,9 @@ public class UserDAO {
 			while (res.next()) {
 				String name = res.getString("name");
 				String birth = res.getString("birth");
-				String mail = res.getString("mail");
+				String email = res.getString("email");
 				String work = res.getString("work");
-				user = new User(id, name, birth, mail, work);
+				user = new User(id, name, birth, email, work);
 			}
 			
 		} catch (Exception e) { e.printStackTrace(); }
@@ -75,12 +93,12 @@ public class UserDAO {
 			ResultSet res = prepStat.executeQuery();
 			
 			while (res.next()) {
-				int id = res.getInt("user_id");
+				int id = res.getInt("id");
 				String name = res.getString("name");
 				String birth = res.getString("birth");
-				String mail = res.getString("mail");
+				String email = res.getString("email");
 				String work = res.getString("work");
-				users.add(new User(id, name, birth, mail, work));
+				users.add(new User(id, name, birth, email, work));
 			}
 			
 		} catch (Exception e) { e.printStackTrace(); }
@@ -88,23 +106,6 @@ public class UserDAO {
 		return users;
 	}
 	
-	
-	//* INSERT
-	public void insertUser(User user) throws SQLException {
-		try(Connection connection = getConnection(); 
-		PreparedStatement prepStat = connection.prepareStatement(INSERT_USER_SQL);){
-			
-			prepStat.setString(1, user.getName());
-			prepStat.setString(2, user.getBirth());
-			prepStat.setString(3, user.getEmail());
-			prepStat.setString(4, user.getWork());
-			
-			prepStat.executeUpdate();
-			
-		} catch (Exception e) { e.printStackTrace(); }
-		
-		
-	}
 	
 	//* UPDATE by user_id
 	public boolean updateUser(User user) throws SQLException {
@@ -124,16 +125,18 @@ public class UserDAO {
 		return rowUp;
 	}
 
+	
 	//* (DELETE by user_id)
 	public boolean deleteUser(int id) throws SQLException {
 		boolean row;
 		try(Connection connection = getConnection(); 
-		PreparedStatement prepStat = connection.prepareStatement(UPDATE_USERS_SQL);){
+		PreparedStatement prepStat = connection.prepareStatement(DELETE_USERS_SQL);){
 			
 			prepStat.setInt(1, id);
 			row = prepStat.executeUpdate() > 0;
 		}
 		return row;
 	}
+	
 	
 }

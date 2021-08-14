@@ -3,18 +3,20 @@
 	pageEncoding="UTF-8"%>
 <html>
 <head>
-<title>User Management Application</title>
+<title>CRUD JSP Test</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
+	
+
 </head>
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-md navbar-dark"
 				style="background-color: tomato">
 				<div>
-					<a href="https://www.javaguides.net" class="navbar-brand"> User Management App </a>
+					<a href="https://github.com/ThePernalonga" class="navbar-brand"> CRUD JSP Test </a>
 				</div>
 				<ul class="navbar-nav">
 					<li><a href="<%=request.getContextPath()%>/list"
@@ -49,27 +51,32 @@
 					</c:if>
 	
 					<fieldset class="form-group">
-						<label>User Name</label> <input type="text"
+						<label>User Name</label> <input type="text" id="name" required pattern="^[a-zA-Z]+\s?[a-zA-Z]+$" placeholder="Nome Sobrenome"
 							value="<c:out value='${user.name}' />" class="form-control"
 							name="name" required="required">
 					</fieldset>
 					
 					<fieldset class="form-group">
-						<label>User Birthday</label> <input type="text"
+						<label>User Birthday</label> <input type="date" required id="birth" name="birth"
 							value="<c:out value='${user.birth}' />" class="form-control"
 							name="birth">
 					</fieldset>
 	
-					<fieldset class="form-group">
-						<label>User Email</label> <input type="text"
+					<fieldset class="form-group" >
+						<label>User Email</label> <input type="email" required placeholder="nome@email.com"
 							value="<c:out value='${user.email}' />" class="form-control"
 							name="email">
 					</fieldset>
 	
-					<fieldset class="form-group">
-						<label>User Work Position</label> <input type="text"
+					<fieldset class="form-group"> <label>User Work field</label> 
+							<select name="work" id="work" 
 							value="<c:out value='${user.work}' />" class="form-control"
-							name="work">
+							name="work" >
+							  <option value="Desenvolvedor">Desenvolvedor</option>
+							  <option value="BDA">BDA</option>
+							  <option value="Gerente de Sistemas">Gerencia de Sistemas</option>
+							  <option value="Arquiteto de Software">Arquiteto de Software</option>
+							</select>
 					</fieldset>
 	
 					<button type="submit" class="btn btn-success">Save</button>

@@ -25,7 +25,14 @@ public class User {
 		this.work = work;
 	}
 
-
+	public void invertDate() {
+		this.setBirth(this.getBirth().replace("-", "/"));
+		String birth = this.getBirth();
+		birth = birth.substring(8, 10) + birth.substring(7, 8) + birth.substring(5, 7)
+			+ birth.substring(4, 5) + birth.substring(0, 4);
+		this.setBirth(birth);
+	}
+	
 	public int getId() { return id; }
 	
 	public void setId(int id) { this.id = id; }
