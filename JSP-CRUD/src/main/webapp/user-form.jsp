@@ -11,10 +11,10 @@
 	
 
 </head>
-	<body>
+	<body style="background-color: #24292d">
 		<header>
-			<nav class="navbar navbar-expand-md navbar-dark"
-				style="background-color: tomato">
+			<nav class="navbar navbar-dark bg-dark"
+				style="background-color: #e3f2fd">
 				<div>
 					<a href="https://github.com/ThePernalonga" class="navbar-brand"> CRUD JSP Test </a>
 				</div>

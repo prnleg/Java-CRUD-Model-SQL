@@ -9,10 +9,10 @@
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 		crossorigin="anonymous">
 	</head>
-	<body>
+	<body style="background-color: #24292d">
 		<header>
-			<nav class="navbar navbar-expand-md navbar-dark"
-				style="background-color: tomato">
+			<nav class="navbar navbar-dark bg-dark"
+				style="background-color: #e3f2fd">
 				<div>
 					<a href="https://github.com/ThePernalonga" class="navbar-brand"> CRUD JSP Test </a>
 				</div>
@@ -25,12 +25,13 @@
 		<br>
 		<div class="row">
 			<div class="container">
-				<h3 class="text-center">List of Users</h3>
+				<h3 class="text-center" style="color: white">List of Users</h3>
 				<hr>
 				<div class="container text-left">
 					<a href="<%=request.getContextPath()%>/new" class="btn btn-success">Add New User</a>
 				</div>
 				<br>
+				<div class="backgroud" style="background-color: white">
 				<table class="table table-bordered">
 					<thead>
 						<tr>
@@ -57,6 +58,7 @@
 						</c:forEach>
 					</tbody>
 				</table>
+				</div>
 			</div>
 		</div>
 	</body>
