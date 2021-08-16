@@ -1,12 +1,21 @@
+// Author: Andre Luiz Gomes Santos
+// Universidade Tecnologica Federal do Paraná
+//
+// Esse código é adaptado de um servletpara MySQL que eu criei,
+// pode ser que precise mais do que pequenas alteracoes para que funcione.
+
+//
+
 package net.java.usermanage;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;				// Para uso do sql, driver, logging, command line, etc...
+import java.util.ArrayList;		// Para o GET-All do MySQL
+import java.util.List;			// Para o GET-All do MySQL
 
+// import da Classe User
 import net.java.usermanage.model.User;
 
-// para uso do mySQL, talvez de para modificar para mongoDB
+// para uso do mySQL, talvez de para modificar para mongoDB ou salvar em JSON
 public class UserDAO {
 	private String jdbcURL = "jdbc:mysql://localhost:3306/sampledb";
 	private String jdbcUser = "root";
@@ -33,9 +42,11 @@ public class UserDAO {
 		
 		return connection;
 	}
-
+	
 	
 	//* INSERT
+	// Mesmo local onde o writeJSON ocorre
+	//endpoint(@PUT)
 	public void insertUser(User user) throws SQLException {
 		try(Connection connection = getConnection(); 
 				PreparedStatement prepStat = connection.prepareStatement(INSERT_USER_SQL);){
@@ -48,14 +59,15 @@ public class UserDAO {
 			prepStat.setString(4, user.getWork());
 			
 			prepStat.executeUpdate();	
+			user.writeJSON();
 			
 		} catch (Exception e) { e.printStackTrace(); }
-		
-		
 	}
 	
 	
+	
 	//* SELECT by user_id
+	//endpoint(@GET)
 	public User selectUser(int id) {
 		
 		User user = null;
@@ -81,6 +93,7 @@ public class UserDAO {
 
 
 	//* SELECT ALL
+	// Esse é um @GET-All do MySQL
 	public List<User> selectAllUsers() {
 		List<User> users = new ArrayList<>();
 		

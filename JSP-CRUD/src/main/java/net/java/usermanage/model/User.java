@@ -1,5 +1,11 @@
 package net.java.usermanage.model;
 
+import java.io.FileWriter;			// Para poder escrever um arquivo, no caso .json
+import java.io.IOException;			// Para o Try/Catch, no caso usado no witeJSON()
+
+import org.json.simple.JSONArray;	// json-simple settar os objetos
+import org.json.simple.JSONObject;	// agrupar 
+
 public class User {
 	
 	private int id;
@@ -25,6 +31,7 @@ public class User {
 		this.work = work;
 	}
 
+	
 	public void invertDate() {
 		this.setBirth(this.getBirth().replace("-", "/"));
 		String birth = this.getBirth();
@@ -32,6 +39,33 @@ public class User {
 			+ birth.substring(4, 5) + birth.substring(0, 4);
 		this.setBirth(birth);
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public void writeJSON() {
+		JSONObject userDetail = new JSONObject();
+
+		String[] person = this.getEmail().split("@");
+		String noBar = this.getBirth();
+		noBar.replaceAll("\\\\", "");
+		
+		userDetail.put("Nome:", this.getName());
+		userDetail.put("Nascimento:", noBar);
+		userDetail.put("Email:", this.getEmail());
+		userDetail.put("Cargo:", this.getWork());
+		
+		JSONObject userReal = new JSONObject(); 
+        userReal.put("Usuario:", userDetail);
+        
+        JSONArray userList = new JSONArray();
+        userList.add(userReal);
+        
+        try (FileWriter file = new FileWriter("C:\\Users\\dede-\\Documents\\GitHub\\Java-CRUD-Model-SQL\\JSP-CRUD\\json_file\\user-" + person[0]  + ".json")) {
+            file.write(userList.toJSONString());
+            file.flush();
+        } catch (IOException e) { e.printStackTrace(); }
+	}
+	
 	
 	public int getId() { return id; }
 	
