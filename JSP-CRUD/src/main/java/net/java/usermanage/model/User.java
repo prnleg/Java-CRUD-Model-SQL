@@ -4,7 +4,6 @@ package net.java.usermanage.model;
 import java.io.FileWriter;			// Para poder escrever um arquivo, no caso .json
 import java.io.IOException;			// Para o Try/Catch, no caso usado no witeJSON()
 
-
 import org.json.simple.JSONArray;	// json-simple settar os objeto e os agrupar
 import org.json.simple.JSONObject;
 

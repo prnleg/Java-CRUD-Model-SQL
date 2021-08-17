@@ -6,13 +6,13 @@
 
 
 package net.java.usermanage;
+// import da Classe User
+import net.java.usermanage.model.User;
 
 import java.sql.*;				// Para uso do sql, driver, logging, command line, etc...
 import java.util.ArrayList;		// Para o GET-All do MySQL
 import java.util.List;			// Para o GET-All do MySQL
 
-// import da Classe User
-import net.java.usermanage.model.User;
 
 // para uso do mySQL, talvez de para modificar para mongoDB ou salvar em JSON
 public class UserDAO {
