@@ -4,7 +4,6 @@
 // Esse código é adaptado de um servletpara MySQL que eu criei,
 // pode ser que precise mais do que pequenas alteracoes para que funcione.
 
-//
 
 package net.java.usermanage;
 
@@ -48,18 +47,20 @@ public class UserDAO {
 	// Mesmo local onde o writeJSON ocorre
 	//endpoint(@PUT)
 	public void insertUser(User user) throws SQLException {
+		
+		user.invertDate();
+		user.twoNames();
+		user.writeJSON();
+		
 		try(Connection connection = getConnection(); 
 				PreparedStatement prepStat = connection.prepareStatement(INSERT_USER_SQL);){
-			
-			user.invertDate();
 			
 			prepStat.setString(1, user.getName());
 			prepStat.setString(2, user.getBirth());
 			prepStat.setString(3, user.getEmail());
 			prepStat.setString(4, user.getWork());
 			
-			prepStat.executeUpdate();	
-			user.writeJSON();
+			prepStat.executeUpdate();
 			
 		} catch (Exception e) { e.printStackTrace(); }
 	}
@@ -71,6 +72,9 @@ public class UserDAO {
 	public User selectUser(int id) {
 		
 		User user = null;
+		
+		
+		// Aqui pra baixo MySQL
 		try(Connection connection = getConnection(); 
 				PreparedStatement prepStat = connection.prepareStatement(SELECT_USER_BY_ID);) {
 			
@@ -99,6 +103,8 @@ public class UserDAO {
 		
 		@SuppressWarnings("unused")
 		User user = null;
+		
+		// Aqui pra baixo MySQL
 		try(Connection connection = getConnection(); 
 				PreparedStatement prepStat = connection.prepareStatement(SELECT_ALL_USERS);) {
 			
@@ -124,6 +130,7 @@ public class UserDAO {
 	public boolean updateUser(User user) throws SQLException {
 		boolean rowUp;
 		
+		// Aqui pra baixo MySQL
 		try(Connection connection = getConnection(); 
 		PreparedStatement prepStat = connection.prepareStatement(UPDATE_USERS_SQL);){
 			
@@ -142,6 +149,8 @@ public class UserDAO {
 	//* (DELETE by user_id)
 	public boolean deleteUser(int id) throws SQLException {
 		boolean row;
+		
+		// Aqui pra baixo MySQL
 		try(Connection connection = getConnection(); 
 		PreparedStatement prepStat = connection.prepareStatement(DELETE_USERS_SQL);){
 			

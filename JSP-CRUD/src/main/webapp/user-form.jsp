@@ -34,15 +34,10 @@
 					<c:if test="${user == null}">
 						<form action="insert" method="post">
 					</c:if>
-	
 					<caption>
 						<h2>
-							<c:if test="${user != null}">
-	            			Edit User
-	            		</c:if>
-							<c:if test="${user == null}">
-	            			Add New User
-	            		</c:if>
+							<c:if test="${user != null}"> Edit User </c:if>
+							<c:if test="${user == null}"> Novo Usuário </c:if>
 						</h2>
 					</caption>
 	
@@ -51,24 +46,24 @@
 					</c:if>
 	
 					<fieldset class="form-group">
-						<label>User Name</label> <input type="text" id="name" required pattern="^[a-zA-Z]+\s?[a-zA-Z]+$" placeholder="Nome Sobrenome"
+						<label>Nome Completo</label> <input type="text" id="name" placeholder="Nome Sobrenome"
 							value="<c:out value='${user.name}' />" class="form-control"
 							name="name" required="required">
 					</fieldset>
 					
 					<fieldset class="form-group">
-						<label>User Birthday</label> <input type="date" required id="birth" name="birth"
+						<label>Data de Nascença</label> <input type="date" required id="birth" name="birth"
 							value="<c:out value='${user.birth}' />" class="form-control"
 							name="birth">
 					</fieldset>
 	
 					<fieldset class="form-group" >
-						<label>User Email</label> <input type="email" required placeholder="nome@email.com"
+						<label>E-mail</label> <input type="email" required placeholder="nome@email.com"
 							value="<c:out value='${user.email}' />" class="form-control"
 							name="email">
 					</fieldset>
 	
-					<fieldset class="form-group"> <label>User Work field</label> 
+					<fieldset class="form-group"> <label>Cargo</label> 
 							<select name="work" id="work" 
 							value="<c:out value='${user.work}' />" class="form-control"
 							name="work" >
